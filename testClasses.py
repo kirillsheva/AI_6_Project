@@ -1,27 +1,8 @@
-# testClasses.py
-# --------------
-# Licensing Information:  You are free to use or extend these projects for 
-# educational purposes provided that (1) you do not distribute or publish 
-# solutions, (2) you retain this notice, and (3) you provide clear 
-# attribution to UC Berkeley, including a link to 
-# http://inst.eecs.berkeley.edu/~cs188/pacman/pacman.html
-# 
-# Attribution Information: The Pacman AI projects were developed at UC Berkeley.
-# The core projects and autograders were primarily created by John DeNero 
-# (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
-# Student side autograding was added by Brad Miller, Nick Hay, and 
-# Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
-
-# import modules from python standard library
 import inspect
 import re
 import sys
 
-
-# Class which models a question in a project.  Note that questions have a
-# maximum number of points they are worth, and are composed of a series of
-# test cases
 class Question(object):
 
     def raiseNotDefined(self):
@@ -88,8 +69,6 @@ class HackedPartialCreditQuestion(Question):
 
 
 class Q6PartialCreditQuestion(Question):
-    """Fails any test which returns False, otherwise doesn't effect the grades object.
-    Partial credit tests will add the required points."""
 
     def execute(self, grades):
         grades.assignZeroCredit()
@@ -101,8 +80,7 @@ class Q6PartialCreditQuestion(Question):
             grades.assignZeroCredit()
 
 class PartialCreditQuestion(Question):
-    """Fails any test which returns False, otherwise doesn't effect the grades object.
-    Partial credit tests will add the required points."""
+
 
     def execute(self, grades):
         grades.assignZeroCredit()
@@ -116,7 +94,7 @@ class PartialCreditQuestion(Question):
 
 
 class NumberPassedQuestion(Question):
-    """Grade is the number of test cases passed."""
+
 
     def execute(self, grades):
         grades.addPoints([f(grades) for _, f in self.testCases].count(True))

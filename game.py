@@ -1,25 +1,4 @@
-# game.py
-# -------
-# Licensing Information:  You are free to use or extend these projects for 
-# educational purposes provided that (1) you do not distribute or publish 
-# solutions, (2) you retain this notice, and (3) you provide clear 
-# attribution to UC Berkeley, including a link to 
-# http://inst.eecs.berkeley.edu/~cs188/pacman/pacman.html
-# 
-# Attribution Information: The Pacman AI projects were developed at UC Berkeley.
-# The core projects and autograders were primarily created by John DeNero 
-# (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
-# Student side autograding was added by Brad Miller, Nick Hay, and 
-# Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
-
-# game.py
-# -------
-# Licensing Information: Please do not distribute or publish solutions to this
-# project. You are free to use and extend these projects for educational
-# purposes. The Pacman AI projects were developed at UC Berkeley, primarily by
-# John DeNero (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
-# For more info, see http://inst.eecs.berkeley.edu/~cs188/sp09/pacman.html
 
 from util import *
 import time, os
@@ -27,26 +6,15 @@ import traceback
 import sys
 
 
-#######################
-# Parts worth reading #
-#######################
 
 class Agent:
-    """
-    An agent must define a getAction method, but may also define the
-    following methods which will be called if they exist:
 
-    def registerInitialState(self, state): # inspects the starting state
-    """
 
     def __init__(self, index=0):
         self.index = index
 
     def getAction(self, state):
-        """
-        The Agent will receive a GameState (from either {pacman, capture, sonar}.py) and
-        must return an action from Directions.{North, South, East, West, Stop}
-        """
+
         raiseNotDefined()
 
 
@@ -73,13 +41,7 @@ class Directions:
 
 
 class Configuration:
-    """
-    A Configuration holds the (x,y) coordinate of a character, along with its
-    traveling direction.
 
-    The convention for positions, like a graph, is that (0,0) is the lower left corner, x increases
-    horizontally and y increases vertically.  Therefore, north is the direction of increasing y, or (0,1).
-    """
 
     def __init__(self, pos, direction):
         self.pos = pos
@@ -108,13 +70,7 @@ class Configuration:
         return "(x,y)=" + str(self.pos) + ", " + str(self.direction)
 
     def generateSuccessor(self, vector):
-        """
-        Generates a new configuration reached by translating the current
-        configuration by the action vector.  This is a low-level call and does
-        not attempt to respect the legality of the movement.
 
-        Actions are movement vectors.
-        """
         x, y = self.pos
         dx, dy = vector
         direction = Actions.vectorToDirection(vector)
@@ -167,13 +123,8 @@ class AgentState:
 
 
 class Grid:
-    """
-    A 2-dimensional array of objects backed by a list of lists.  Data is accessed
-    via grid[x][y] where (x,y) are positions on a Pacman map with x horizontal,
-    y vertical and the origin (0,0) in the bottom left corner.
 
-    The __str__ method constructs an output that is oriented like a pacman board.
-    """
+
 
     def __init__(self, width, height, initialValue=False, bitRepresentation=None):
         if initialValue not in [False, True]: raise Exception('Grids can only contain booleans')
@@ -235,11 +186,7 @@ class Grid:
         return list
 
     def packBits(self):
-        """
-        Returns an efficient int list representation
 
-        (width, height, bitPackedInts...)
-        """
         bits = [self.width, self.height]
         currentInt = 0
         for i in range(self.height * self.width):
@@ -259,9 +206,7 @@ class Grid:
         return x, y
 
     def _unpackBits(self, bits):
-        """
-        Fills in data from a bit-level representation
-        """
+
         cell = 0
         for packed in bits:
             for bit in self._unpackInt(packed, self.CELLS_PER_INT):
@@ -295,9 +240,7 @@ def reconstituteGrid(bitRep):
 ####################################
 
 class Actions:
-    """
-    A collection of static methods for manipulating move actions.
-    """
+
     # Directions
     _directions = {Directions.NORTH: (0, 1),
                    Directions.SOUTH: (0, -1),
@@ -390,9 +333,7 @@ class GameStateData:
     """
 
     def __init__(self, prevState=None):
-        """
-        Generates a new data packet by copying information from its predecessor.
-        """
+
         if prevState != None:
             self.food = prevState.food.shallowCopy()
             self.capsules = []  # prevState.capsules[:]
@@ -426,9 +367,7 @@ class GameStateData:
         return copiedStates
 
     def __eq__(self, other):
-        """
-        Allows two states to be compared.
-        """
+
         if other == None: return False
         # TODO Check for type of other
         if not self.agentStates == other.agentStates: return False
@@ -438,9 +377,7 @@ class GameStateData:
         return True
 
     def __hash__(self):
-        """
-        Allows states to be keys of dictionaries.
-        """
+
         for i, state in enumerate(self.agentStates):
             try:
                 int(hash(state))
@@ -503,9 +440,7 @@ class GameStateData:
         return 'E'
 
     def initialize(self, layout, numGhostAgents):
-        """
-        Creates an initial game state from a layout array (see layout.py).
-        """
+
         self.food = layout.food.copy()
         # self.capsules = []
         self.capsules = []  # layout.capsules[:]
@@ -534,9 +469,7 @@ except:
 
 
 class Game:
-    """
-    The Game manages the control flow, soliciting actions from agents.
-    """
+
 
     def __init__(self, agents, display, rules, startingIndex=0, muteAgents=False, catchExceptions=False):
         self.agentCrashed = False
@@ -561,7 +494,6 @@ class Game:
             return self.rules.getProgress(self)
 
     def _agentCrash(self, agentIndex, quiet=False):
-        "Helper method for handling agent crashes"
         if not quiet: traceback.print_exc()
         self.gameOver = True
         self.agentCrashed = True
